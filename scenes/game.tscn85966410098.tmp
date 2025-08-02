@@ -48,7 +48,7 @@ metadata/_edit_group_ = true
 texture = SubResource("PlaceholderTexture2D_yqjtg")
 
 [node name="FrontWheels" type="Node2D" parent="World/Vehicle"]
-position = Vector2(7, 0)
+position = Vector2(14, 0)
 
 [node name="Left" type="Node2D" parent="World/Vehicle/FrontWheels"]
 position = Vector2(0, -14)
@@ -88,6 +88,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_lock_ = true
 
 [node name="PanelContainer" type="PanelContainer" parent="Control"]
 custom_minimum_size = Vector2(300, 0)
@@ -99,25 +100,3 @@ offset_bottom = 40.0
 unique_name_in_owner = true
 layout_mode = 2
 text = "Placeholder"
-
-[node name="VehicleHUD" type="VBoxContainer" parent="Control"]
-unique_name_in_owner = true
-layout_mode = 2
-offset_left = 426.0
-offset_top = 515.0
-offset_right = 726.0
-offset_bottom = 648.0
-
-[node name="FrontWeight" type="HSlider" parent="Control/VehicleHUD"]
-layout_mode = 2
-max_value = 1000.0
-step = 5.0
-value = 500.0
-editable = false
-tick_count = 10
-
-[node name="RearWeight" type="HSlider" parent="Control/VehicleHUD"]
-layout_mode = 2
-step = 5.0
-editable = false
-tick_count = 10
