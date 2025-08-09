@@ -45,6 +45,39 @@ var current_velocity = Vector2.ZERO
 @onready var hud_wf = %VehicleHUD/FrontWeight
 @onready var hud_wr = %VehicleHUD/RearWeight
 
+#class VehicleEngine:
+	#var rpm:float
+	#var torque:float
+	
+func get_engine_torque_at_rpm(rpm:float, gear:int):
+	match gear:
+		1:
+			if 0.0 < rpm  and rpm < 2000.0:
+				return -(rpm**2)/1000 + 2*rpm + 3000
+		2:
+			if 1400.0 < rpm  and rpm < 4000.0:
+				return -((rpm + 2000)**2)/1000 + 9.1*rpm + 500
+		3:
+			if 3800.0 < rpm  and rpm < 7000.0:
+				return -((0.5 * rpm + 500)**2)/3000 + rpm -700
+
+func get_gear_ratio(gear:int):
+	match gear:
+		1:
+			return 2.66
+		2:
+			return 1.78
+		3:
+			return 1.30
+
+func get_engine_drive_force(rpm:float, 
+	gear:int,
+	transmission_efficience:float=0.7,
+	differential_ratio:float=3.42,
+	):
+	var torque = get_engine_torque_at_rpm(rpm, gear)
+	return torque * get_gear_ratio(gear) * differential_ratio * transmission_efficience
+
 func _ready() -> void:
 	# Setup the body
 	front_axle.position.x = front_axle_distance
@@ -61,27 +94,17 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	var direction:Vector2=transform.x
 	
-
-
-	
 	#acceleration = sqrt(acc_vector.x * acc_vector.x + acc_vector.y * acc_vector.y)
 	
 	
 	var brake = Input.get_action_strength("brake")
 	var gas = Input.get_action_strength("gas")
 	
-	# EndHud
-	
 	#print("Body size: ", body_size.x)
 	# (rear_axle_distance + front_axle_distance) = wheel base
 	var weight_transfer = center_of_mass_height/wheel_base * mass * acceleration
 	front_weight = front_axle_distance/wheel_base * vehicle_weight - weight_transfer
 	rear_weight = rear_axle_distance/wheel_base * vehicle_weight + weight_transfer
-	
-	
-	# Hud
-	hud_wf.value = front_weight
-	hud_wr.value = rear_weight
 	
 	# print(direction)
 	# Longitudinal forces
@@ -108,4 +131,9 @@ func _physics_process(delta: float) -> void:
 	acceleration = acc_vector.dot(direction.normalized())
 	
 	position = position + delta * velocity
-	
+
+func _process(delta: float) -> void:
+	# Hud
+	hud_wf.value = front_weight
+	hud_wr.value = rear_weight
+	# EndHud

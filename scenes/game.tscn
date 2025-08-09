@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=4 uid="uid://83guwoj2c04b"]
+[gd_scene load_steps=12 format=4 uid="uid://83guwoj2c04b"]
 
 [ext_resource type="Script" uid="uid://bltbgjgqyoqo5" path="res://src/vehicle.gd" id="1_uwrxv"]
 [ext_resource type="Script" uid="uid://dp6xex0m12txw" path="res://src/world.gd" id="1_yqjtg"]
 [ext_resource type="Texture2D" uid="uid://cigaasxjr2sj5" path="res://assets/aseprite/floor20x20.png" id="3_lbhrr"]
 [ext_resource type="Texture2D" uid="uid://c076s44b1cuio" path="res://assets/aseprite/floor.svg" id="3_lnu2h"]
 [ext_resource type="Texture2D" uid="uid://j1imaln7jxgy" path="res://assets/aseprite/com.png" id="5_iywne"]
+[ext_resource type="Script" uid="uid://b7i2ecn5s8ge8" path="res://src/engine.gd" id="6_p57ef"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lbhrr"]
 texture = ExtResource("3_lnu2h")
@@ -79,6 +80,10 @@ texture = SubResource("PlaceholderTexture2D_lnu2h")
 
 [node name="COMIndicator" type="Sprite2D" parent="World/Vehicle"]
 texture = ExtResource("5_iywne")
+
+[node name="Engine" type="Node2D" parent="World/Vehicle"]
+position = Vector2(-214, -223)
+script = ExtResource("6_p57ef")
 
 [node name="Control" type="Control" parent="."]
 custom_minimum_size = Vector2(800, 600)
