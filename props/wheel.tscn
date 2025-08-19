@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://d22fb5hi8bi82"]
+
+[ext_resource type="Script" uid="uid://dodbabh4achly" path="res://src/wheel.gd" id="1_oso3q"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_lnu2h"]
+size = Vector2(7, 4)
+
+[node name="Left" type="Node2D"]
+script = ExtResource("1_oso3q")
+metadata/radius = 0.3
+
+[node name="Wheel" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_lnu2h")

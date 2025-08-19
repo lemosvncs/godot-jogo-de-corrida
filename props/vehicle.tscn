@@ -1,0 +1,55 @@
+[gd_scene load_steps=6 format=3 uid="uid://to2tmxgmwhje"]
+
+[ext_resource type="Script" uid="uid://bdno74yoofjug" path="res://src/vehicle.gd" id="1_u4yod"]
+[ext_resource type="Texture2D" uid="uid://j1imaln7jxgy" path="res://assets/aseprite/com.png" id="2_ahkgh"]
+[ext_resource type="Script" uid="uid://b7i2ecn5s8ge8" path="res://src/engine.gd" id="3_wudav"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_yqjtg"]
+size = Vector2(30, 20)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_lnu2h"]
+size = Vector2(7, 4)
+
+[node name="Vehicle" type="Node2D"]
+script = ExtResource("1_u4yod")
+metadata/_edit_group_ = true
+
+[node name="BodySprite" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_yqjtg")
+
+[node name="FrontWheels" type="Node2D" parent="."]
+position = Vector2(7, 0)
+
+[node name="Left" type="Node2D" parent="FrontWheels"]
+position = Vector2(0, -14)
+
+[node name="Wheel" type="Sprite2D" parent="FrontWheels/Left"]
+texture = SubResource("PlaceholderTexture2D_lnu2h")
+
+[node name="Right" type="Node2D" parent="FrontWheels"]
+position = Vector2(0, 14)
+
+[node name="Wheel" type="Sprite2D" parent="FrontWheels/Right"]
+texture = SubResource("PlaceholderTexture2D_lnu2h")
+
+[node name="RearWheels" type="Node2D" parent="."]
+position = Vector2(-14, 0)
+
+[node name="Left" type="Node2D" parent="RearWheels"]
+position = Vector2(0, -14)
+
+[node name="Wheel" type="Sprite2D" parent="RearWheels/Left"]
+texture = SubResource("PlaceholderTexture2D_lnu2h")
+
+[node name="Right" type="Node2D" parent="RearWheels"]
+position = Vector2(0, 14)
+
+[node name="Wheel" type="Sprite2D" parent="RearWheels/Right"]
+texture = SubResource("PlaceholderTexture2D_lnu2h")
+
+[node name="COMIndicator" type="Sprite2D" parent="."]
+texture = ExtResource("2_ahkgh")
+
+[node name="Engine" type="Node2D" parent="."]
+position = Vector2(-214, -223)
+script = ExtResource("3_wudav")
