@@ -28,16 +28,19 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	# Step 1: engine Torque
 	var engine_torque_nm = motor.calc_torque(1.0)
 	var transmission_torque_nm = transmission.calc_transmission_torque(engine_torque_nm)
-	diff.calc_diff_torque(transmission_torque_nm, rear_wheels)
+	diff.set_diff_torque(transmission_torque_nm, rear_wheels)
 
 	# # Step 2: Apply torque to wheels
+	# Leva em consideração a força máxima possível (normal) pela gravidade
 	for wheel in rear_wheels.get_children():
 		var res_force = wheel.torque/wheel.radius
-		var max_tire_force = (mass * 9.8 / 4) * wheel.coef_friction
+		res_force = res_force
+		var max_tire_force = (mass * Global.G / 4) * wheel.coef_friction
 		res_force = clamp(res_force, -max_tire_force, max_tire_force)
-		state.apply_force(forward * res_force)
+		# Aponta a força pra direção que a roda tá apontado
+		# Não é tão útil na roda traseira, por enquanto, mas vai ser útil na roda dianteira
+		state.apply_force(forward.rotated(wheel.global_rotation) * res_force)
 		
-
 class Motor:
 	var current_rpm:float=0.0
 	var max_rpm:float=6000.0
@@ -52,6 +55,6 @@ class Transmission:
 		return engine_torque_nm
 
 class Differential:
-	func calc_diff_torque(transmission_torque_nm:float, rear_wheels:Node2D):
+	func set_diff_torque(transmission_torque_nm:float, rear_wheels:Node2D):
 		for wheel in rear_wheels.get_children():
 			wheel.torque = transmission_torque_nm
